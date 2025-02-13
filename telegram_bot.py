@@ -5,10 +5,12 @@ from telegram.ext import Application, MessageHandler, CallbackContext, filters
 import json
 import time
 from datetime import datetime
+import asyncio
 
 TOKEN = "7903410355:AAFc88HhZtqvfZ3rGzKRCZUJMUwVZFaWiqU"
 LOG_FILE = "conversations.log"
 ELAPSED_TIME_FOR_NEXT_LOG = 6*3600 # 6 hours in seconds
+RESET_INTERVAL = 45 # 45 seconds
 
 try: 
     with open(LOG_FILE, "r", encoding="utf-8") as f:
@@ -35,30 +37,56 @@ async def ready_to_update_counter(user_key: str) -> bool:
     last_log_time = user_conversations[user_key]["last_log_time"]
     return (current_time - last_log_time >= 20) # CHANGE TO ELAPSED_TIME_FOR_NEXT_LOG
 
+def update_weekly_progress(user_key: str, user_conversations: dict) -> str:
+    """Updates and returns the weekly progress string with green and gray ticks."""
+
+    days_of_week = {
+        "Monday": "☑",
+        "Tuesday": "☑",
+        "Wednesday": "☑",
+        "Thursday": "☑",
+        "Friday": "☑",
+        "Saturday": "☑",
+        "Sunday": "☑"
+    }
+
+    # Initialize user's weekly progress if not present
+    if "weekly_progress" not in user_conversations[user_key]:
+        user_conversations[user_key]["weekly_progress"] = days_of_week.copy()
+
+    today = datetime.today().strftime("%A")
+    user_conversations[user_key]["weekly_progress"][today] = "✅"
+
+    progress_message = "Weekly Progress:\n" + "\n".join(
+        [f"{user_conversations[user_key]['weekly_progress'][day]} {day}" for day in days_of_week]
+    )
+
+    return progress_message
 
 
 async def generate_bot_message(user_key: str, user_id: str, user_name: str, user_message: str, user_conversations: dict) -> str:
     current_time = time.time()
-
     ready_to_log = await ready_to_update_counter(user_key)
 
     six_hours_later = current_time + ELAPSED_TIME_FOR_NEXT_LOG
-
-    # Convert to a human-readable format
     formatted_time = datetime.fromtimestamp(six_hours_later).strftime('%H:%M %Y/%m/%d')
 
     if user_message.upper() == "GYM":
         if ready_to_log:       
             user_conversations[user_key]["total_sessions_logged"] += 1
             total_session_count = user_conversations[user_key]["total_sessions_logged"]
-
-            user_conversations[user_key]["logs_until_reward"] -= 1
+            
+            if user_conversations[user_key]["logs_until_reward"] > 0: # prevents minus numbers
+                user_conversations[user_key]["logs_until_reward"] -= 1
             logs_until_reward = user_conversations[user_key]["logs_until_reward"]
 
-            user_conversations[user_key]["last_log_time"] = current_time
-            return f"You have successfully logged a gym session! 🤸\n\nTotal number of gym sessions logged: {total_session_count}\n\nSessions left to log this week before reward: {logs_until_reward}"
+            weekly_progress_ticks = update_weekly_progress(user_key, user_conversations)
+
+            user_conversations[user_key]["last_log_time"] = current_time 
+            bot_response = f"You have successfully logged a gym session! 🤸\n\n{weekly_progress_ticks}\n\nTotal number of gym sessions logged: {total_session_count}\n\nSessions left to log this week before reward: {logs_until_reward}"
         else: 
-            return f"You have recently logged a gym session. \nNext time you can log a session is: \n{formatted_time}."
+            bot_response = f"You have recently logged a gym session. 🏋 \nNext time you can log a session is: \n{formatted_time}."
+        return bot_response
     else:
         return "send GYM to log a gym session"
     
@@ -82,6 +110,20 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text(bot_message)
 
 
+async def reset_all_variables():
+    """Resets logs_until_reward every 45 seconds."""
+    global user_conversations
+
+    while True:
+        await asyncio.sleep(RESET_INTERVAL)  # Wait for 45 seconds
+        for user_key in user_conversations:
+            user_conversations[user_key]["logs_until_reward"] = user_conversations[user_key]["weekly_log_goal"]
+
+        # Save changes to file
+        with open(LOG_FILE, "w", encoding="utf-8") as f:
+            json.dump(user_conversations, f, indent=4, ensure_ascii=False)
+        
+        print(f"✅ logs_until_reward reset for all users. {datetime.fromtimestamp(time.time()).strftime('%H:%M %Y/%m/%d')}")
 
 
 
@@ -89,6 +131,9 @@ def main():
     app = Application.builder().token(TOKEN).build()
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)) # Add a message handler to check incoming text
     
+    loop = asyncio.get_event_loop()
+    loop.create_task(reset_all_variables())
+
     print("Bot is running... Press Ctrl+C to stop.")
     app.run_polling()
 

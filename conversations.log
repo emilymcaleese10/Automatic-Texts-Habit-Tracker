@@ -1,52 +1,89 @@
 {
     "None_7888983333": {
-        "total_sessions_logged": 4,
+        "total_sessions_logged": 9,
         "weekly_log_goal": 2,
-        "logs_until_reward": -2,
-        "last_log_time": 1739463865.0543563,
+        "logs_until_reward": 1,
+        "last_log_time": 1739467913.2605424,
         "conversation_stream": [
             {
                 "User": "Gym",
-                "Timestamp": "2025-02-13 13:16:29+00:00"
+                "Timestamp": "2025-02-13 17:14:14+00:00"
             },
             {
                 "Bot": "You have successfully logged a gym session! 🤸\n\nTotal number of gym sessions logged: 1\n\nSessions left to log this week before reward: 1"
             },
             {
                 "User": "Gym",
-                "Timestamp": "2025-02-13 13:16:35+00:00"
+                "Timestamp": "2025-02-13 17:14:19+00:00"
             },
             {
-                "Bot": "You have recently logged a gym session. \nNext time you can log a session is: \n19:16 2025/02/13."
-            },
-            {
-                "User": "Gym",
-                "Timestamp": "2025-02-13 13:16:45+00:00"
-            },
-            {
-                "Bot": "You have recently logged a gym session. \nNext time you can log a session is: \n19:16 2025/02/13."
+                "Bot": "You have recently logged a gym session. \nNext time you can log a session is: \n23:14 2025/02/13."
             },
             {
                 "User": "Gym",
-                "Timestamp": "2025-02-13 13:17:03+00:00"
+                "Timestamp": "2025-02-13 17:16:48+00:00"
             },
             {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nTotal number of gym sessions logged: 2\n\nSessions left to log this week before reward: 0"
-            },
-            {
-                "User": "Gym",
-                "Timestamp": "2025-02-13 14:39:09+00:00"
-            },
-            {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nTotal number of gym sessions logged: 3\n\nSessions left to log this week before reward: -1"
+                "Bot": "You have successfully logged a gym session! 🤸\n\nTotal number of gym sessions logged: 2\n\nSessions left to log this week before reward: 1"
             },
             {
                 "User": "Gym",
-                "Timestamp": "2025-02-13 16:24:26+00:00"
+                "Timestamp": "2025-02-13 17:16:56+00:00"
             },
             {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nTotal number of gym sessions logged: 4\n\nSessions left to log this week before reward: -2"
+                "Bot": "You have recently logged a gym session. 🏋 \nNext time you can log a session is: \n23:16 2025/02/13."
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-13 17:17:11+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nTotal number of gym sessions logged: 3\n\nSessions left to log this week before reward: 0"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-13 17:17:40+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nTotal number of gym sessions logged: 4\n\nSessions left to log this week before reward: 1"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-13 17:20:13+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\n<function update_weekly_progress at 0x0000020BC36A4E50>\n\nTotal number of gym sessions logged: 5\n\nSessions left to log this week before reward: 1"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-13 17:22:31+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nTotal number of gym sessions logged: 6\n\nSessions left to log this week before reward: 1"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-13 17:27:27+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n☑ Tuesday\n☑ Wednesday\n✅ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 8\n\nSessions left to log this week before reward: 1"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-13 17:31:54+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n☑ Tuesday\n☑ Wednesday\n✅ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 9\n\nSessions left to log this week before reward: 1"
             }
-        ]
+        ],
+        "weekly_progress": {
+            "Monday": "☑",
+            "Tuesday": "☑",
+            "Wednesday": "☑",
+            "Thursday": "✅",
+            "Friday": "☑",
+            "Saturday": "☑",
+            "Sunday": "☑"
+        }
     }
 }
