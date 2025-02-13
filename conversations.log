@@ -1,6 +1,6 @@
 {
     "None_7888983333": {
-        "total_sessions_logged": 0,
+        "total_sessions_logged": 10,
         "conversation_stream": [
             {
                 "User": "GYM",
@@ -22,6 +22,76 @@
             },
             {
                 "Bot": "send GYM to log a gym session"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-12 18:59:14+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n Number of gym sessions logged: 1"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-12 18:59:25+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n Number of gym sessions logged: 2"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-12 18:59:43+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\nNumber of gym sessions logged: 3"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-12 19:00:06+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nNumber of gym sessions logged: 4"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-12 19:02:47+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nNumber of gym sessions logged: 5"
+            },
+            {
+                "User": "GyM",
+                "Timestamp": "2025-02-12 21:28:42+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nNumber of gym sessions logged: 6"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-12 21:29:23+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nNumber of gym sessions logged: 7"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-12 21:29:28+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nNumber of gym sessions logged: 8"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-12 21:29:38+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nNumber of gym sessions logged: 9"
+            },
+            {
+                "User": "Gym",
+                "Timestamp": "2025-02-13 11:06:10+00:00"
+            },
+            {
+                "Bot": "You have successfully logged a gym session! 🤸\n\nNumber of gym sessions logged: 10"
             }
         ]
     }
