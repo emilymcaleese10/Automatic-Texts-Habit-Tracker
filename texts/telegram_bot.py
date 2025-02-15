@@ -6,9 +6,9 @@ import json
 import time
 from datetime import datetime
 import asyncio
+from telegram_sensitive_info import TOKEN
+from telegram_sensitive_info import LOG_FILE
 
-TOKEN = "7903410355:AAFc88HhZtqvfZ3rGzKRCZUJMUwVZFaWiqU"
-LOG_FILE = "conversations.log"
 ELAPSED_TIME_FOR_NEXT_LOG = 6*3600 # 6 hours in seconds
 RESET_INTERVAL = 45 # 45 seconds
 DAYS_OF_THE_WEEK_DICT = {
