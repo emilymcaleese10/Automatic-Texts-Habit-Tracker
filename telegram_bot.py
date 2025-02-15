@@ -11,6 +11,15 @@ TOKEN = "7903410355:AAFc88HhZtqvfZ3rGzKRCZUJMUwVZFaWiqU"
 LOG_FILE = "conversations.log"
 ELAPSED_TIME_FOR_NEXT_LOG = 6*3600 # 6 hours in seconds
 RESET_INTERVAL = 45 # 45 seconds
+DAYS_OF_THE_WEEK_DICT = {
+    "Monday": "☑",
+    "Tuesday": "☑",
+    "Wednesday": "☑",
+    "Thursday": "☑",
+    "Friday": "☑",
+    "Saturday": "☑",
+    "Sunday": "☑"
+}
 
 try: 
     with open(LOG_FILE, "r", encoding="utf-8") as f:
@@ -37,10 +46,11 @@ async def ready_to_update_counter(user_key: str) -> bool:
     last_log_time = user_conversations[user_key]["last_log_time"]
     return (current_time - last_log_time >= 20) # CHANGE TO ELAPSED_TIME_FOR_NEXT_LOG
 
+
 def update_weekly_progress(user_key: str, user_conversations: dict) -> str:
     """Updates and returns the weekly progress string with green and gray ticks."""
 
-    days_of_week = {
+    current_days_of_the_week = {
         "Monday": "☑",
         "Tuesday": "☑",
         "Wednesday": "☑",
@@ -48,20 +58,21 @@ def update_weekly_progress(user_key: str, user_conversations: dict) -> str:
         "Friday": "☑",
         "Saturday": "☑",
         "Sunday": "☑"
-    }
+}
 
-    # Initialize user's weekly progress if not present
-    if "weekly_progress" not in user_conversations[user_key]:
-        user_conversations[user_key]["weekly_progress"] = days_of_week.copy()
+    # Initialize user's weekly progress to grey ticks
+    if user_conversations[user_key]["weekly_progress"] == {}:
+        user_conversations[user_key]["weekly_progress"] = DAYS_OF_THE_WEEK_DICT.copy()
 
     today = datetime.today().strftime("%A")
     user_conversations[user_key]["weekly_progress"][today] = "✅"
 
     progress_message = "Weekly Progress:\n" + "\n".join(
-        [f"{user_conversations[user_key]['weekly_progress'][day]} {day}" for day in days_of_week]
+        [f"{user_conversations[user_key]['weekly_progress'][day]} {day}" for day in DAYS_OF_THE_WEEK_DICT]
     )
 
     return progress_message
+
 
 
 async def generate_bot_message(user_key: str, user_id: str, user_name: str, user_message: str, user_conversations: dict) -> str:
@@ -85,7 +96,7 @@ async def generate_bot_message(user_key: str, user_id: str, user_name: str, user
             user_conversations[user_key]["last_log_time"] = current_time 
             bot_response = f"You have successfully logged a gym session! 🤸\n\n{weekly_progress_ticks}\n\nTotal number of gym sessions logged: {total_session_count}\n\nSessions left to log this week before reward: {logs_until_reward}"
         else: 
-            bot_response = f"You have recently logged a gym session. 🏋 \nNext time you can log a session is: \n{formatted_time}."
+            bot_response = f"You have only recently logged a gym session. 🏋\n\nNext time you can log a session is: \n{formatted_time}."
         return bot_response
     else:
         return "send GYM to log a gym session"
@@ -102,7 +113,7 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
     user_key = f"{user_name}_{user_id}"
 
     if user_key not in user_conversations:
-        user_conversations[user_key] = {"total_sessions_logged": 0, "weekly_log_goal": 2, "logs_until_reward": 2, "last_log_time": time.time(), "conversation_stream": []}  # Create a new conversation dictionary for the user if it doesn't exist   
+        user_conversations[user_key] = {"total_sessions_logged": 0, "weekly_log_goal": 2, "logs_until_reward": 2, "last_log_time": time.time(), "weekly_progress": {}, "conversation_stream": []}  # Create a new conversation dictionary for the user if it doesn't exist   
 
     bot_message = await generate_bot_message(user_key, user_id, user_name, user_message, user_conversations)
     await store_message(user_key, user_id, user_name, user_message, bot_message, timestamp, user_conversations, LOG_FILE)
@@ -115,9 +126,12 @@ async def reset_all_variables():
     global user_conversations
 
     while True:
-        await asyncio.sleep(RESET_INTERVAL)  # Wait for 45 seconds
+        await asyncio.sleep(RESET_INTERVAL)  # Wait
+
         for user_key in user_conversations:
-            user_conversations[user_key]["logs_until_reward"] = user_conversations[user_key]["weekly_log_goal"]
+            user_conversations[user_key]["logs_until_reward"] = user_conversations[user_key]["weekly_log_goal"] # reset logs_until_reward
+        
+        user_conversations[user_key]["weekly_progress"] = DAYS_OF_THE_WEEK_DICT.copy() # reset ticks
 
         # Save changes to file
         with open(LOG_FILE, "w", encoding="utf-8") as f:
