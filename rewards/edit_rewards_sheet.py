@@ -19,7 +19,7 @@ def get_and_update_n(client, sheet_url):
             code = column_a[i]  # Get corresponding code
             cell_position = f"D{i+1}"  # Get the cell position (Google Sheets is 1-based)
 
-            worksheet.update(cell_position, "y") # Update 'n' to 'y'
+            worksheet.update(cell_position, [["y"]]) # Update 'n' to 'y'
 
             print(f"✅ Found code: {code} (Updated row {i+1} from 'n' to 'y')")
             return code

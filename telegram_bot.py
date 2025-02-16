@@ -6,8 +6,8 @@ import json
 import time
 from datetime import datetime
 import asyncio
-from telegram_sensitive_info import TOKEN
-from telegram_sensitive_info import LOG_FILE
+from texts.telegram_sensitive_info import TOKEN
+from texts.telegram_sensitive_info import LOG_FILE
 
 ELAPSED_TIME_FOR_NEXT_LOG = 6*3600 # 6 hours in seconds
 RESET_INTERVAL = 45 # 45 seconds
