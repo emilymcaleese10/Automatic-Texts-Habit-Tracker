@@ -1,9 +1,4 @@
-from gspread_sensitive_info import authenticate_google_sheets
-from gspread_sensitive_info import JSON_KEYFILE
-from gspread_sensitive_info import SHEET_URL
-
-
-def get_and_update_n(client, sheet_url):
+def get_and_update_n(client, sheet_url) -> str:
     """Find the first 'n' in RECEIVED column, retrieve the code from CODE column, and update 'n' to 'y'."""
     
     sheet = client.open_by_url(sheet_url)
@@ -21,12 +16,7 @@ def get_and_update_n(client, sheet_url):
 
             worksheet.update(cell_position, [["y"]]) # Update 'n' to 'y'
 
-            print(f"✅ Found code: {code} (Updated row {i+1} from 'n' to 'y')")
             return code
 
     print("❌ No 'n' found in RECEIVED column")
     return None 
-
-client = authenticate_google_sheets(JSON_KEYFILE)
-
-next_code = get_and_update_n(client, SHEET_URL)

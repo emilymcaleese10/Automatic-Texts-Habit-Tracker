@@ -1,13 +1,12 @@
 # to message user manually 
 
 import requests
+from texts.telegram_sensitive_info import TOKEN
+from texts.telegram_sensitive_info import LOG_FILE
 
-BOT_TOKEN = ""
+BOT_TOKEN = "TOKEN"
 CHAT_ID = ""
 MESSAGE = ""
-
-token_input = input("Insert the bot token you would like to user: ")
-BOT_TOKEN = token_input
 
 chat_id_input = input("Input user's chat id: ")
 CHAT_ID = chat_id_input
