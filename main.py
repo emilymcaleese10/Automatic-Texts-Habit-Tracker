@@ -33,36 +33,41 @@ async def store_message(user_key: str, user_id: str, user_name: str, user_messag
         json.dump(user_conversations, f, indent=4, ensure_ascii=False)
 
 async def generate_bot_message(user_key: str, user_id: str, user_name: str, user_message: str, user_conversations: dict) -> str:
+    """ Generate a response based on user input and logs progress"""
+
     current_time = time.time()
     ready_to_log = await ready_to_update_counter(user_key, user_conversations)
-    six_hours_later = current_time + ELAPSED_TIME_FOR_NEXT_LOG
-    formatted_time = datetime.fromtimestamp(six_hours_later).strftime('%H:%M %Y/%m/%d')
+    next_log_time = current_time + ELAPSED_TIME_FOR_NEXT_LOG
 
-    if user_message.upper() == "GYM":
-        logs_until_reward = user_conversations[user_key]["logs_until_reward"]
-        if ready_to_log:
-            user_conversations[user_key]["total_sessions_logged"] += 1
-            total_session_count = user_conversations[user_key]["total_sessions_logged"]
-            goal_achieved = user_conversations[user_key]["goal_achieved"]
+    formatted_time = datetime.fromtimestamp(next_log_time).strftime('%H:%M %Y/%m/%d')
 
-            if logs_until_reward > 0: # prevents minus numbers
-                user_conversations[user_key]["logs_until_reward"] -= 1
-            logs_until_reward = user_conversations[user_key]["logs_until_reward"]
+    if user_message.strip().upper() != "GYM":
+        return "Send 'GYM' to log a gym session."
+    
+    logs_until_reward = user_conversations[user_key]["logs_until_reward"]
 
-            weekly_progress_ticks = update_weekly_progress(user_key, user_conversations)
+    if not ready_to_log:
+        return f"You have only recently logged a gym session. 🏋\n\nNext time you can log a session is: \n{formatted_time}."
 
-            user_conversations[user_key]["last_log_time"] = current_time
-            if logs_until_reward == 0 and not goal_achieved:
-                reward_code = get_and_update_n(client, SHEET_URL)
-                user_conversations[user_key]["goal_achieved"] = True
-                bot_response = f"You have successfully achieved your week's goal! 🥳\n\nGive the code below to the gym receptionist to receive your reward.\n\nCode: {reward_code}"
-            else: # goal not achieved yet
-                bot_response = f"You have successfully logged a gym session! 🤸\n\n{weekly_progress_ticks}\n\nTotal number of gym sessions logged: {total_session_count}\n\nSessions left to log this week before reward: {logs_until_reward}"
-        else: 
-            bot_response = f"You have only recently logged a gym session. 🏋\n\nNext time you can log a session is: \n{formatted_time}."
-        return bot_response
-    else:
-        return "send GYM to log a gym session"
+    user_conversations[user_key]["total_sessions_logged"] += 1
+    user_conversations[user_key]["logs_until_reward"] = max(0, logs_until_reward - 1)
+    user_conversations[user_key]["last_log_time"] = current_time
+
+    total_session_count = user_conversations[user_key]["total_sessions_logged"]
+    logs_until_reward = user_conversations[user_key]["logs_until_reward"]
+    weekly_progress_ticks = update_weekly_progress(user_key, user_conversations)
+
+    if logs_until_reward == 0 and not user_conversations[user_key]["goal_achieved"]:
+        reward_code = get_and_update_n(client, SHEET_URL)
+        user_conversations[user_key]["goal_achieved"] = True
+        return (f"You have successfully achieved your week's goal! 🥳\n\n"
+        f"Give the code below to the gym receptionist to receive your reward.\n\n"
+        f"Code: {reward_code}")
+    
+    return (f"You have successfully logged a gym session! 🤸\n\n"
+        f"{weekly_progress_ticks}\n\n"
+        f"Total number of gym sessions logged: {total_session_count}\n\n"
+        f"Sessions left to log this week before reward: {logs_until_reward}")
 
 
 async def handle_message(update: Update, context: CallbackContext) -> None:
