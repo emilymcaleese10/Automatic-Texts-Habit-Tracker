@@ -6,7 +6,7 @@ from texts.telegram_sensitive_info import TOKEN
 
 TRINITY_LAT = 53.3438
 TRINITY_LON = -6.2546
-RADIUS_METERS = 100  
+RADIUS_METERS = 400  
 
 
 def calculate_distance(lat1, lon1, lat2, lon2):
@@ -18,21 +18,6 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     a = math.sin(delta_phi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(delta_lambda / 2) ** 2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     return R * c  # Distance in meters
-
-async def location_handler(update: Update, context):
-    """Handle user's location and check if they are at Trinity College."""
-    user_location = update.message.location
-    user_lat, user_lon = user_location.latitude, user_location.longitude
-
-    # Calculate distance from Trinity College
-    distance = calculate_distance(user_lat, user_lon, TRINITY_LAT, TRINITY_LON)
-
-    if distance <= RADIUS_METERS:
-        response = "📍 You are at Trinity College Dublin! Welcome! 🎓"
-    else:
-        response = f"❌ You are {int(distance)} meters away from Trinity College."
-
-    await update.message.reply_text(response)
 
 
 async def start(update: Update, context):

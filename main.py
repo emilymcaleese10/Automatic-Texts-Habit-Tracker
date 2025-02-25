@@ -6,7 +6,7 @@ import json, time, asyncio
 from datetime import datetime
 
 from texts.telegram_sensitive_info import TOKEN, LOG_FILE
-from texts.location_functions import calculate_distance, location_handler
+from texts.location_functions import calculate_distance, TRINITY_LAT, TRINITY_LON, RADIUS_METERS
 
 from rewards.edit_rewards_sheet import get_and_update_n
 from rewards.gspread_sensitive_info import authenticate_google_sheets, JSON_KEYFILE, SHEET_URL
@@ -32,18 +32,24 @@ async def store_message(user_key: str, user_id: str, user_name: str, user_messag
     with open(log_file, "w", encoding="utf-8") as f:
         json.dump(user_conversations, f, indent=4, ensure_ascii=False)
 
-async def generate_bot_message(user_key: str, user_id: str, user_name: str, user_message: str, user_conversations: dict) -> str:
-    """ Generate a response based on user input and logs progress"""
 
+async def generate_bot_message(user_key: str, user_id: str, user_name: str, user_location, user_conversations: dict) -> str:
+    """ Generate a response based on user input and logs progress"""
+    # return location_handler 
     current_time = time.time()
     ready_to_log = await ready_to_update_counter(user_key, user_conversations)
     next_log_time = current_time + ELAPSED_TIME_FOR_NEXT_LOG
-
     formatted_time = datetime.fromtimestamp(next_log_time).strftime('%H:%M %Y/%m/%d')
 
-    if user_message.strip().upper() != "GYM":
-        return "Send 'GYM' to log a gym session."
+    if not user_location:
+        return "Send your live location (at Trinity Gym) to log a gym session."
     
+    user_lat, user_lon = user_location.latitude, user_location.longitude
+    distance = calculate_distance(user_lat, user_lon, TRINITY_LAT, TRINITY_LON)
+
+    if distance > RADIUS_METERS:
+        return f"❌ You are {int(distance)} meters away from Trinity Gym. Move closer to log a session."
+
     logs_until_reward = user_conversations[user_key]["logs_until_reward"]
 
     if not ready_to_log:
@@ -73,29 +79,42 @@ async def generate_bot_message(user_key: str, user_id: str, user_name: str, user
 async def handle_message(update: Update, context: CallbackContext) -> None:
     global user_conversations
 
+    if not update.message:
+        return
+
     user_id = str(update.message.from_user.id)
     user_name = update.message.from_user.username
-    user_message = update.message.text.strip()
     timestamp = str(update.message.date)
-
     user_key = f"{user_name}_{user_id}"
 
     if user_key not in user_conversations:
-        user_conversations[user_key] = {"total_sessions_logged": 0, "weekly_log_goal": 2, "logs_until_reward": 2, "last_log_time": time.time(), "goal_achieved": False, "weekly_progress": {}, "conversation_stream": []}  # Create a new conversation dictionary for the user if it doesn't exist   
+        user_conversations[user_key] = {
+            "total_sessions_logged": 0, 
+            "weekly_log_goal": 2, 
+            "logs_until_reward": 2, 
+            "last_log_time": time.time(), 
+            "goal_achieved": False, 
+            "weekly_progress": {}, 
+            "conversation_stream": []
+        }  # Create a new conversation dictionary for the user if it doesn't exist   
 
-    bot_message = await generate_bot_message(user_key, user_id, user_name, user_message, user_conversations)
-    await store_message(user_key, user_id, user_name, user_message, bot_message, timestamp, user_conversations, LOG_FILE)
-    
+    user_location = update.message.location
+
+    if user_location and not user_location.live_period:
+        await update.message.reply_text("❌ Please share your LIVE location instead of selecting a location on the map.")
+        return
+
+    bot_message = await generate_bot_message(user_key, user_id, user_name, user_location, user_conversations)
+
+    await store_message(user_key, user_id, user_name, "Sent Live Location" if user_location else "No Location", bot_message, timestamp, user_conversations, LOG_FILE)
     await update.message.reply_text(bot_message)
-
 
 
 
 def main():
     app = Application.builder().token(TOKEN).build()
 
-    app.add_handler(MessageHandler(filters.LOCATION, location_handler))  # ✅ Location handler
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)) # Add a message handler to check incoming text
+    app.add_handler(MessageHandler(filters.ALL, lambda update, context: handle_message(update, context))) # Add a message handler to check incoming text
     
     loop = asyncio.get_event_loop()
     loop.create_task(reset_all_variables(user_conversations))  # USING USER_CONVERSATIONS
