@@ -17,12 +17,13 @@ from data_handling.update_ticks import update_weekly_progress
 
 client = authenticate_google_sheets(JSON_KEYFILE)
 
-
 try: 
     with open(LOG_FILE, "r", encoding="utf-8") as f:
         user_conversations = json.load(f)
 except (FileNotFoundError, json.JSONDecodeError):
     user_conversations = {}
+
+
 
 async def store_message(user_key: str, user_id: str, user_name: str, user_message: str, bot_message: str, timestamp: str, user_conversations: dict, log_file: str):
 
@@ -108,7 +109,6 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
 
     await store_message(user_key, user_id, user_name, "Sent Live Location" if user_location else "No Location", bot_message, timestamp, user_conversations, LOG_FILE)
     await update.message.reply_text(bot_message)
-
 
 
 def main():

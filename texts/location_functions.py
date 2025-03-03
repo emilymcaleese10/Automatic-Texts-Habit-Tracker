@@ -3,10 +3,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters
 import math
 
 from texts.telegram_sensitive_info import TOKEN
-
-TRINITY_LAT = 53.3438
-TRINITY_LON = -6.2546
-RADIUS_METERS = 400  
+from data_handling.constants import TRINITY_LAT, TRINITY_LON, RADIUS_METERS
 
 
 def calculate_distance(lat1, lon1, lat2, lon2):

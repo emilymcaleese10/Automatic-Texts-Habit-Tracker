@@ -1,14 +1,14 @@
 {
     "None_7888983333": {
-        "total_sessions_logged": 12,
+        "total_sessions_logged": 1,
         "weekly_log_goal": 2,
-        "logs_until_reward": 2,
-        "last_log_time": 1740436322.8480346,
+        "logs_until_reward": 1,
+        "last_log_time": 1740579577.4879858,
         "goal_achieved": false,
         "weekly_progress": {
             "Monday": "☑",
             "Tuesday": "☑",
-            "Wednesday": "☑",
+            "Wednesday": "✅",
             "Thursday": "☑",
             "Friday": "☑",
             "Saturday": "☑",
@@ -16,202 +16,47 @@
         },
         "conversation_stream": [
             {
-                "User": "Gym",
-                "Timestamp": "2025-02-18 15:45:47+00:00"
+                "User": "Sent Live Location",
+                "Timestamp": "2025-02-26 14:09:09+00:00"
             },
             {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n✅ Tuesday\n☑ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 1\n\nSessions left to log this week before reward: 1"
-            },
-            {
-                "User": "Gym",
-                "Timestamp": "2025-02-18 15:46:00+00:00"
-            },
-            {
-                "Bot": "You have successfully achieved your week's goal! 🥳\n\nGive the code below to the gym receptionist to receive your reward.\n\nCode: C13I"
-            },
-            {
-                "User": "Gym",
-                "Timestamp": "2025-02-18 15:46:51+00:00"
-            },
-            {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n✅ Tuesday\n☑ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 3\n\nSessions left to log this week before reward: 1"
-            },
-            {
-                "User": "Gym",
-                "Timestamp": "2025-02-18 15:46:58+00:00"
-            },
-            {
-                "Bot": "You have successfully achieved your week's goal! 🥳\n\nGive the code below to the gym receptionist to receive your reward.\n\nCode: GBC1"
-            },
-            {
-                "User": "Gym",
-                "Timestamp": "2025-02-18 16:25:12+00:00"
-            },
-            {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n✅ Tuesday\n☑ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 5\n\nSessions left to log this week before reward: 1"
-            },
-            {
-                "User": "Hello",
-                "Timestamp": "2025-02-18 17:46:41+00:00"
-            },
-            {
-                "Bot": "Send 'GYM' to log a gym session."
-            },
-            {
-                "User": "Hello",
-                "Timestamp": "2025-02-18 17:51:34+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "Gym",
-                "Timestamp": "2025-02-18 17:52:40+00:00"
-            },
-            {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n✅ Tuesday\n☑ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 6\n\nSessions left to log this week before reward: 1"
-            },
-            {
-                "User": "Gym",
-                "Timestamp": "2025-02-18 18:04:36+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-18 18:13:41+00:00"
-            },
-            {
-                "Bot": "❌ You are 375 meters away from Trinity Gym. Move closer to log a session."
-            },
-            {
-                "User": "No Location",
-                "Timestamp": "2025-02-18 18:14:06+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-18 18:14:18+00:00"
-            },
-            {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n✅ Tuesday\n☑ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 7\n\nSessions left to log this week before reward: 1"
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-18 18:14:50+00:00"
-            },
-            {
-                "Bot": "You have successfully achieved your week's goal! 🥳\n\nGive the code below to the gym receptionist to receive your reward.\n\nCode: 83PI"
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-18 18:16:39+00:00"
-            },
-            {
-                "Bot": "❌ You are 533 meters away from Trinity Gym. Move closer to log a session."
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-18 18:16:56+00:00"
-            },
-            {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n✅ Tuesday\n☑ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 9\n\nSessions left to log this week before reward: 1"
-            },
-            {
-                "User": "No Location",
-                "Timestamp": "2025-02-19 20:42:15+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-19 20:44:24+00:00"
-            },
-            {
-                "Bot": "❌ You are 481 meters away from Trinity Gym. Move closer to log a session."
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-19 20:47:10+00:00"
-            },
-            {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n☑ Tuesday\n✅ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 10\n\nSessions left to log this week before reward: 1"
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-19 20:47:37+00:00"
-            },
-            {
-                "Bot": "You have successfully achieved your week's goal! 🥳\n\nGive the code below to the gym receptionist to receive your reward.\n\nCode: 0WHZ"
-            },
-            {
-                "User": "No Location",
-                "Timestamp": "2025-02-19 20:48:52+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "No Location",
-                "Timestamp": "2025-02-19 20:49:02+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "No Location",
-                "Timestamp": "2025-02-24 22:31:08+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-24 22:31:29+00:00"
-            },
-            {
-                "Bot": "❌ You are 7868 meters away from Trinity Gym. Move closer to log a session."
-            },
-            {
-                "User": "Sent Location",
-                "Timestamp": "2025-02-24 22:32:04+00:00"
-            },
-            {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n✅ Monday\n☑ Tuesday\n☑ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 12\n\nSessions left to log this week before reward: 1"
+                "Bot": "❌ You are 322 meters away from Trinity Gym. Move closer to log a session."
             },
             {
                 "User": "Sent Live Location",
-                "Timestamp": "2025-02-24 22:38:28+00:00"
+                "Timestamp": "2025-02-26 14:19:37+00:00"
             },
             {
-                "Bot": "❌ You are 7868 meters away from Trinity Gym. Move closer to log a session."
+                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n☑ Tuesday\n✅ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 1\n\nSessions left to log this week before reward: 1"
             },
             {
                 "User": "No Location",
-                "Timestamp": "2025-02-24 22:39:23+00:00"
+                "Timestamp": "2025-03-02 22:27:56+00:00"
             },
             {
                 "Bot": "Send your live location (at Trinity Gym) to log a gym session."
             },
             {
                 "User": "No Location",
-                "Timestamp": "2025-02-24 22:40:00+00:00"
+                "Timestamp": "2025-03-02 22:31:01+00:00"
             },
             {
                 "Bot": "Send your live location (at Trinity Gym) to log a gym session."
             },
             {
-                "User": "Sent Live Location",
-                "Timestamp": "2025-02-24 22:42:15+00:00"
+                "User": "No Location",
+                "Timestamp": "2025-03-02 22:32:14+00:00"
             },
             {
-                "Bot": "❌ You are 7898 meters away from Trinity Gym. Move closer to log a session."
+                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
+            },
+            {
+                "User": "No Location",
+                "Timestamp": "2025-03-03 11:36:26+00:00"
+            },
+            {
+                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
             }
-        ],
-        "reward_received": false
+        ]
     }
 }
