@@ -14,11 +14,17 @@ async def reset_all_variables(user_conversations):
     while True:
         await asyncio.sleep(RESET_INTERVAL)  # Wait
 
+        """store weekly variables before reseting"""
+        for user_key in user_conversations:
+            user_conversations[user_key]["goals_achieved_weekly"].append(user_conversations[user_key]["goal_achieved"])
+            user_conversations[user_key]["sessions_logged_weekly"].append(user_conversations[user_key]["sessions_logged_this_week"])
+
         for user_key in user_conversations:
             user_conversations[user_key]["logs_until_reward"] = user_conversations[user_key]["weekly_log_goal"] # reset logs_until_reward
             user_conversations[user_key]["goal_achieved"] = False
             user_conversations[user_key]["weekly_progress"] = DAYS_OF_THE_WEEK_DICT.copy() # reset ticks
             user_conversations[user_key]["reward_received"] = False
+            user_conversations[user_key]["sessions_logged_this_week"] = 0
 
         # Save changes to file
         with open(LOG_FILE, "w", encoding="utf-8") as f:

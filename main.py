@@ -13,7 +13,7 @@ from rewards.gspread_sensitive_info import authenticate_google_sheets, JSON_KEYF
 
 from data_handling.constants import ELAPSED_TIME_FOR_NEXT_LOG
 from data_handling.time_elapse_functions import ready_to_update_counter, reset_all_variables
-from data_handling.update_ticks import update_weekly_progress
+from data_handling.update_ticks import update_progress_ticks
 
 client = authenticate_google_sheets(JSON_KEYFILE)
 
@@ -22,7 +22,6 @@ try:
         user_conversations = json.load(f)
 except (FileNotFoundError, json.JSONDecodeError):
     user_conversations = {}
-
 
 
 async def store_message(user_key: str, user_id: str, user_name: str, user_message: str, bot_message: str, timestamp: str, user_conversations: dict, log_file: str):
@@ -57,22 +56,25 @@ async def generate_bot_message(user_key: str, user_id: str, user_name: str, user
         return f"You have only recently logged a gym session. 🏋\n\nNext time you can log a session is: \n{formatted_time}."
 
     user_conversations[user_key]["total_sessions_logged"] += 1
+    user_conversations[user_key]["sessions_logged_this_week"] += 1
     user_conversations[user_key]["logs_until_reward"] = max(0, logs_until_reward - 1)
     user_conversations[user_key]["last_log_time"] = current_time
 
     total_session_count = user_conversations[user_key]["total_sessions_logged"]
     logs_until_reward = user_conversations[user_key]["logs_until_reward"]
-    weekly_progress_ticks = update_weekly_progress(user_key, user_conversations)
+    weekly_progress_ticks = update_progress_ticks(user_key, user_conversations)
+    sessions_logged_this_week = user_conversations[user_key]["sessions_logged_this_week"]
 
     if logs_until_reward == 0 and not user_conversations[user_key]["goal_achieved"]:
         reward_code = get_and_update_n(client, SHEET_URL)
         user_conversations[user_key]["goal_achieved"] = True
         return (f"You have successfully achieved your week's goal! 🥳\n\n"
-        f"Give the code below to the gym receptionist to receive your reward.\n\n"
+        f"Give the code below to the Trinity gym receptionist to receive your reward.\n\n"
         f"Code: {reward_code}")
     
     return (f"You have successfully logged a gym session! 🤸\n\n"
         f"{weekly_progress_ticks}\n\n"
+        f"Number of gym sessions logged this week: {sessions_logged_this_week}\n\n"
         f"Total number of gym sessions logged: {total_session_count}\n\n"
         f"Sessions left to log this week before reward: {logs_until_reward}")
 
@@ -90,14 +92,35 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
 
     if user_key not in user_conversations:
         user_conversations[user_key] = {
+            "account_active": True,
+            "user_real_name": None,
             "total_sessions_logged": 0, 
-            "weekly_log_goal": 2, 
-            "logs_until_reward": 2, 
+            "weekly_log_goal": 2,
+            "sessions_logged_this_week": 0, 
+            "logs_until_reward": 2,
             "last_log_time": time.time(), 
             "goal_achieved": False, 
-            "weekly_progress": {}, 
+            "progress_ticks": {}, 
+            "goals_achieved_weekly": [],  # [true, false, true,] => achieved 2 goals in 3 weeks
+            "sessions_logged_weekly": [], # [2, 2, 2] => logged 2 gym sessions a week for 3 weeks
             "conversation_stream": []
         }  # Create a new conversation dictionary for the user if it doesn't exist   
+        await update.message.reply_text(f"Welcome, this is the first ever Habitus prototype!\n\n"
+            f"Thanks for signing up to be a test user, your feedback will be very helpful for the development of the actual app!\n\n"
+            f"Before we start, please enter your first name (this can't be changed): ")
+        return
+    
+    if user_conversations[user_key]["user_real_name"] is None:
+        user_conversations[user_key]["user_real_name"] = update.message.text
+        await update.message.reply_text(f"Thanks, {update.message.text}! "
+            f"You can now start logging your gym sessions.\n\n"
+            f"To log a gym session click the 📎 beside the text input box, then click 'Location' and then 'Share My Live Location for' when you are at Trinity gym. 🤸\n\n"
+            f"You can turn your location off as soon as you get a response message, which should take a couple of seconds. 📌\n\n"
+            f"Starting March 3rd, your weekly goal will be to log 2 gym sessions a week, and then 3 gym sessions a week for the next two weeks. After 4 weeks, you will have the option to continue using habitus for a monthly subscription, which you can cancel at any time.\n\n"
+            f"Once you achieve your goal, you'll receive a code that you can use to redeem your reward at the Trinity gym reception. 🍫\n\n"
+            f"Follow our Instagram, habitus_rewards, to get updates and make sure to check your email for updates too! 🔔\n\n"
+            f"Happy gymming! 🏋")
+        return
 
     user_location = update.message.location
 

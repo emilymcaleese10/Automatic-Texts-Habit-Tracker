@@ -1,62 +1,55 @@
 {
     "None_7888983333": {
+        "account_active": true,
+        "user_real_name": "Emily",
         "total_sessions_logged": 1,
         "weekly_log_goal": 2,
-        "logs_until_reward": 1,
-        "last_log_time": 1740579577.4879858,
+        "sessions_logged_this_week": 0,
+        "logs_until_reward": 2,
+        "last_log_time": 1741007607.9728966,
         "goal_achieved": false,
-        "weekly_progress": {
-            "Monday": "☑",
+        "progress_ticks": {
+            "Monday": "✅",
             "Tuesday": "☑",
-            "Wednesday": "✅",
+            "Wednesday": "☑",
             "Thursday": "☑",
             "Friday": "☑",
             "Saturday": "☑",
             "Sunday": "☑"
         },
+        "goals_achieved_weekly": [
+            false,
+            false
+        ],
+        "sessions_logged_weekly": [
+            0,
+            1
+        ],
         "conversation_stream": [
             {
+                "User": "No Location",
+                "Timestamp": "2025-03-03 13:13:24+00:00"
+            },
+            {
+                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
+            },
+            {
                 "User": "Sent Live Location",
-                "Timestamp": "2025-02-26 14:09:09+00:00"
+                "Timestamp": "2025-03-03 13:13:29+00:00"
             },
             {
-                "Bot": "❌ You are 322 meters away from Trinity Gym. Move closer to log a session."
-            },
-            {
-                "User": "Sent Live Location",
-                "Timestamp": "2025-02-26 14:19:37+00:00"
-            },
-            {
-                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n☑ Monday\n☑ Tuesday\n✅ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nTotal number of gym sessions logged: 1\n\nSessions left to log this week before reward: 1"
-            },
-            {
-                "User": "No Location",
-                "Timestamp": "2025-03-02 22:27:56+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "No Location",
-                "Timestamp": "2025-03-02 22:31:01+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "No Location",
-                "Timestamp": "2025-03-02 22:32:14+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
-            },
-            {
-                "User": "No Location",
-                "Timestamp": "2025-03-03 11:36:26+00:00"
-            },
-            {
-                "Bot": "Send your live location (at Trinity Gym) to log a gym session."
+                "Bot": "You have successfully logged a gym session! 🤸\n\nWeekly Progress:\n✅ Monday\n☑ Tuesday\n☑ Wednesday\n☑ Thursday\n☑ Friday\n☑ Saturday\n☑ Sunday\n\nNumber of gym sessions logged this week: 1\n\nTotal number of gym sessions logged: 1\n\nSessions left to log this week before reward: 1"
             }
-        ]
+        ],
+        "weekly_progress": {
+            "Monday": "☑",
+            "Tuesday": "☑",
+            "Wednesday": "☑",
+            "Thursday": "☑",
+            "Friday": "☑",
+            "Saturday": "☑",
+            "Sunday": "☑"
+        },
+        "reward_received": false
     }
 }
